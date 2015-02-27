@@ -236,7 +236,13 @@ def create_osmtags(elveg_tags):
         else:
             # There should be no other possible values for MEDIUM
             warn(u"Unknown MEDIUM value '{MEDIUM}' for OBJTYPE {OBJTYPE} for TRANSID {TRANSID}".format(**elveg_tags))
-
+    
+    # Add source date
+    if elveg_tags.has_key('DATAFANGSTDATO'):
+        date = elveg_tags['DATAFANGSTDATO']
+        osmtags['source:date'] = '%s-%s-%s' % (date[0:4],date[4:6],date[6:8])
+    
+    osmtags['source'] = 'Kartverket Elveg'
     # TODO: OBJTYPE="Frittst\xe5ende trapp" if they look useful
 
     return osmtags
